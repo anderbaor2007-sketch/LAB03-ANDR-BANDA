@@ -4,7 +4,7 @@ resource "docker_image" "nginx" {
 }
 
 # Create a container
-resource "docker_container" "foo" {
+resource "docker_container" "web_server" {
   image = docker_image.nginx.image_id
   name  = "web-server"
   ports{ 
@@ -12,4 +12,8 @@ resource "docker_container" "foo" {
     external = 3000  
   }
 
+} 
+
+output "web_server_port" {
+    value = docker_container.web_server.ports[0].external
 }
