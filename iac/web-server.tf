@@ -9,10 +9,11 @@ resource "docker_container" "web_server" {
   name  = "web-server"
   ports{ 
     internal = 80
-    external = 3000  
+    external = var.web_server_port
   }
 
 } 
+
 
 output "web_server_port" {
     value = docker_container.web_server.ports[0].external
