@@ -6,14 +6,12 @@ resource "docker_image" "nginx" {
 # Create a container
 resource "docker_container" "web_server" {
   image = docker_image.nginx.image_id
-  name  = "web-server"
+  name  = "web-server-${terraform.workspace}"
   ports{ 
     internal = 80
-    external = var.web_server_port
-  }
-
+    external = lookup(var.web_server_port, terraform.workspace, 3000)
 } 
-
+}
 
 output "web_server_port" {
     value = docker_container.web_server.ports[0].external
